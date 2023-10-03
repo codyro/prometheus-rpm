@@ -95,6 +95,7 @@ fi
 %{_bindir}/%{name}
 %config(noreplace) %{_sysconfdir}/default/%{name}
 %{_unitdir}/%{name}.service
+%{_unitdir}/%{name}.socket
 %license LICENSE
 %doc NOTICE
 
