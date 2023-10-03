@@ -1,6 +1,7 @@
 [Unit]
 Description=Node exporter
 After=network-online.target
+Requires=node_exporter.socket
 
 [Service]
 EnvironmentFile=/etc/default/node_exporter
@@ -8,7 +9,7 @@ User=nodeexporter
 Group=nodeexporter
 Restart=always
 ExecReload=/bin/kill -HUP $MAINPID
-ExecStart=/bin/sh -c 'exec /usr/bin/node_exporter ${ARGS}'
+ExecStart=/bin/sh -c 'exec /usr/bin/node_exporter --web.systemd-socket ${ARGS}'
 
 [Install]
 WantedBy=multi-user.target
