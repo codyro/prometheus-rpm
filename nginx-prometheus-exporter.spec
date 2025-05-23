@@ -2,16 +2,14 @@
 
 %define  uid   nginxexporter
 %define  gid   nginxexporter
-%define  nuid  7975
-%define  ngid  7975
 
 Name:          nginx-prometheus-exporter
 Summary:       NGINX Prometheus Exporter
-Version:       0.8.0
-Release:       2%{?dist}
+Version:       
+Release:       3%{?dist}
 License:       ASL 2.0
 
-Source0:       https://github.com/nginxinc/nginx-prometheus-exporter/releases/download/v%{version}/nginx-prometheus-exporter-%{version}-linux-amd64.tar.gz
+Source0:       https://github.com/nginxinc/nginx-prometheus-exporter/releases/download/v%{version}/nginx-prometheus-exporter_%{version}_linux_amd64.tar.gz
 Source1:       https://raw.githubusercontent.com/lkiesow/prometheus-rpm/master/nginx-prometheus-exporter.service
 Source2:       https://raw.githubusercontent.com/lkiesow/prometheus-rpm/master/nginx-prometheus-exporter.env
 Source3:       https://raw.githubusercontent.com/nginxinc/nginx-prometheus-exporter/v%{version}/LICENSE
@@ -59,20 +57,8 @@ rm -rf %{buildroot}
 
 %pre
 # Create user and group if nonexistent
-# Try using a common numeric uid/gid if possible
-if [ ! $(getent group %{gid}) ]; then
-   if [ ! $(getent group %{ngid}) ]; then
-      groupadd -r -g %{ngid} %{gid} > /dev/null 2>&1 || :
-   else
-      groupadd -r %{gid} > /dev/null 2>&1 || :
-   fi
-fi
 if [ ! $(getent passwd %{uid}) ]; then
-   if [ ! $(getent passwd %{nuid}) ]; then
-      useradd -M -r -u %{nuid} -g %{gid} %{uid} > /dev/null 2>&1 || :
-   else
-      useradd -M -r -g %{gid} %{uid} > /dev/null 2>&1 || :
-   fi
+   useradd -M -r -g %{gid} %{uid} > /dev/null 2>&1 || :
 fi
 
 
@@ -97,6 +83,18 @@ fi
 
 
 %changelog
+* Thu Jan 09 2025 Lars Kiesow <lkiesow@uos.de> - -3
+- Update to 
+
+* Sun Jan 05 2025 Lars Kiesow <lkiesow@uos.de> - 1.4.0-3
+- Fix release filename
+
+* Thu Dec 05 2024 Lars Kiesow <lkiesow@uos.de> - 1.4.0-2
+- Update to 1.4.0
+
+* Sat Aug 03 2024 Lars Kiesow <lkiesow@uos.de> - 1.3.0-2
+- Update to 1.3.0
+
 * Sun Mar 14 2021 Lars Kiesow <lkiesow@uos.de> - 0.8.0-2
 - Fixed service file and configuration
 

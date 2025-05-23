@@ -1,0 +1,12 @@
+[Unit]
+Description=Send Alertmanager alerts to Matrix rooms
+After=network-online.target
+
+[Service]
+User=matrixalert
+Group=matrixalert
+Restart=always
+ExecStart=/usr/bin/matrix-alertmanager-receiver --config-path=/etc/matrix-alertmanager-receiver.yml
+
+[Install]
+WantedBy=multi-user.target

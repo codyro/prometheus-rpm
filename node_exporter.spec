@@ -7,8 +7,8 @@
 
 Name:          node_exporter
 Summary:       Node exporter for Prometheus
-Version:       1.6.1
-Release:       3%{?dist}
+Version:       1.9.1
+Release:       2%{?dist}
 License:       ASL 2.0
 
 Source0:       https://github.com/prometheus/node_exporter/releases/download/v%{version}/node_exporter-%{version}.linux-amd64.tar.gz
@@ -101,6 +101,24 @@ fi
 
 
 %changelog
+* Wed Apr 02 2025 Lars Kiesow <lkiesow@uos.de> - 1.9.1-2
+- Update to 1.9.1
+
+* Tue Feb 18 2025 Lars Kiesow <lkiesow@uos.de> - 1.9.0-2
+- Update to 1.9.0
+
+* Mon Jul 15 2024 Lars Kiesow <lkiesow@uos.de> - 1.8.2-2
+- Update to 1.8.2
+
+* Wed May 22 2024 Lars Kiesow <lkiesow@uos.de> - 1.8.1-2
+- Update to 1.8.1
+
+* Thu Apr 25 2024 Lars Kiesow <lkiesow@uos.de> - 1.8.0-2
+- Update to 1.8.0
+
+* Tue Nov 14 2023 Lars Kiesow <lkiesow@uos.de> - 1.7.0-2
+- Update to 1.7.0
+
 * Tue Oct 03 2023 Cody Robertson <cody@hawkhost.com> - 1.6.1-3
 - Add systemd socket unit file
 - Use socket file

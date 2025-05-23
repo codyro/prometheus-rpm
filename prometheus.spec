@@ -2,13 +2,11 @@
 
 %define  uid   prometheus
 %define  gid   prometheus
-%define  nuid  7970
-%define  ngid  7970
 
 Name:          prometheus
 Summary:       Prometheus systems monitoring and alerting toolkit
-Version:       2.45.1
-Release:       3%{?dist}
+Version:       3.4.0
+Release:       4%{?dist}
 License:       ASL 2.0
 
 Source0:       https://github.com/prometheus/prometheus/releases/download/v%{version}/prometheus-%{version}.linux-amd64.tar.gz
@@ -39,9 +37,6 @@ rm -rf %{buildroot}
 install -p -d -m 0755 %{buildroot}%{_sysconfdir}/%{name}
 install -p -d -m 0755 %{buildroot}%{_sharedstatedir}/%{name}
 
-# Maybe for console templates?
-#install -p -d -m 0755 %{buildroot}%{_sharedstatedir}/%{name}
-
 # install binary
 install -p -D -m 0755 prometheus %{buildroot}%{_bindir}/prometheus
 install -p -D -m 0755 promtool %{buildroot}%{_bindir}/promtool
@@ -60,8 +55,6 @@ install -p -D -m 0644 \
 install -p -D -m 0644 \
    prometheus.yml \
    %{buildroot}%{_sysconfdir}/%{name}/prometheus.yml
-cp -r consoles console_libraries \
-   %{buildroot}%{_sysconfdir}/%{name}/
 
 %clean
 rm -rf %{buildroot}
@@ -69,20 +62,8 @@ rm -rf %{buildroot}
 
 %pre
 # Create user and group if nonexistent
-# Try using a common numeric uid/gid if possible
-if [ ! $(getent group %{gid}) ]; then
-   if [ ! $(getent group %{ngid}) ]; then
-      groupadd -r -g %{ngid} %{gid} > /dev/null 2>&1 || :
-   else
-      groupadd -r %{gid} > /dev/null 2>&1 || :
-   fi
-fi
 if [ ! $(getent passwd %{uid}) ]; then
-   if [ ! $(getent passwd %{nuid}) ]; then
-      useradd -M -r -u %{nuid} -g %{gid} %{uid} > /dev/null 2>&1 || :
-   else
-      useradd -M -r -g %{gid} %{uid} > /dev/null 2>&1 || :
-   fi
+   useradd -M -r -g %{gid} %{uid} > /dev/null 2>&1 || :
 fi
 
 
@@ -110,6 +91,108 @@ fi
 
 
 %changelog
+* Sun May 18 2025 Lars Kiesow <lkiesow@uos.de> - 3.4.0-4
+- Update to 3.4.0
+
+* Sat May 03 2025 Lars Kiesow <lkiesow@uos.de> - 3.3.1-4
+- Update to 3.3.1
+
+* Sat Apr 19 2025 Lars Kiesow <lkiesow@uos.de> - 3.3.0-4
+- Update to 3.3.0
+
+* Wed Mar 19 2025 Lars Kiesow <lkiesow@uos.de> - 2.53.4-4
+- Update to 2.53.4
+
+* Thu Feb 27 2025 Lars Kiesow <lkiesow@uos.de> - 3.2.1-4
+- Update to 3.2.1
+
+* Tue Feb 18 2025 Lars Kiesow <lkiesow@uos.de> - 3.2.0-4
+- Update to 3.2.0
+
+* Sun Jan 05 2025 Lars Kiesow <lkiesow@uos.de> - 3.1.0-4
+- Fix build (console files no longer exist)
+
+* Fri Jan 03 2025 Lars Kiesow <lkiesow@uos.de> - 3.1.0-3
+- Update to 3.1.0
+
+* Fri Nov 29 2024 Lars Kiesow <lkiesow@uos.de> - 3.0.1-3
+- Update to 3.0.1
+
+* Fri Nov 15 2024 Lars Kiesow <lkiesow@uos.de> - 3.0.0-3
+- Update to 3.0.0
+
+* Thu Nov 07 2024 Lars Kiesow <lkiesow@uos.de> - 2.55.1-3
+- Update to 2.55.1
+
+* Wed Nov 06 2024 Lars Kiesow <lkiesow@uos.de> - 2.53.3-3
+- Update to 2.53.3
+
+* Wed Oct 23 2024 Lars Kiesow <lkiesow@uos.de> - 2.55.0-3
+- Update to 2.55.0
+
+* Wed Aug 28 2024 Lars Kiesow <lkiesow@uos.de> - 2.54.1-3
+- Update to 2.54.1
+
+* Sat Aug 10 2024 Lars Kiesow <lkiesow@uos.de> - 2.54.0-3
+- Update to 2.54.0
+
+* Thu Jul 11 2024 Lars Kiesow <lkiesow@uos.de> - 2.53.1-3
+- Update to 2.53.1
+
+* Sat Jun 22 2024 Lars Kiesow <lkiesow@uos.de> - 2.45.6-3
+- Update to 2.45.6
+
+* Thu Jun 20 2024 Lars Kiesow <lkiesow@uos.de> - 2.53.0-3
+- Update to 2.53.0
+
+* Thu May 09 2024 Lars Kiesow <lkiesow@uos.de> - 2.52.0-3
+- Update to 2.52.0
+
+* Fri May 03 2024 Lars Kiesow <lkiesow@uos.de> - 2.45.5-3
+- Update to 2.45.5
+
+* Tue Apr 16 2024 Lars Kiesow <lkiesow@uos.de> - 2.51.2-3
+- Update to 2.51.2
+
+* Fri Mar 29 2024 Lars Kiesow <lkiesow@uos.de> - 2.51.1-3
+- Update to 2.51.1
+
+* Thu Mar 21 2024 Lars Kiesow <lkiesow@uos.de> - 2.51.0%2Bdedupelabels-3
+- Update to 2.51.0%2Bdedupelabels
+
+* Wed Mar 20 2024 Lars Kiesow <lkiesow@uos.de> - 2.51.0-3
+- Update to 2.51.0
+
+* Tue Mar 19 2024 Lars Kiesow <lkiesow@uos.de> - 2.45.4-3
+- Update to 2.45.4
+
+* Tue Feb 27 2024 Lars Kiesow <lkiesow@uos.de> - 2.50.1-3
+- Update to 2.50.1
+
+* Fri Feb 23 2024 Lars Kiesow <lkiesow@uos.de> - 2.50.0-3
+- Update to 2.50.0
+
+* Thu Jan 25 2024 Lars Kiesow <lkiesow@uos.de> - 2.45.3-3
+- Update to 2.45.3
+
+* Tue Jan 16 2024 Lars Kiesow <lkiesow@uos.de> - 2.49.1-3
+- Update to 2.49.1
+
+* Wed Dec 20 2023 Lars Kiesow <lkiesow@uos.de> - 2.45.2-3
+- Update to 2.45.2
+
+* Sun Dec 10 2023 Lars Kiesow <lkiesow@uos.de> - 2.48.1-3
+- Update to 2.48.1
+
+* Fri Nov 17 2023 Lars Kiesow <lkiesow@uos.de> - 2.48.0-3
+- Update to 2.48.0
+
+* Mon Oct 16 2023 Lars Kiesow <lkiesow@uos.de> - 2.47.2-3
+- Update to 2.47.2
+
+* Thu Oct 05 2023 Lars Kiesow <lkiesow@uos.de> - 2.47.1-3
+- Update to 2.47.1
+
 * Sun Oct 01 2023 Lars Kiesow <lkiesow@uos.de> - 2.45.1-3
 - Update to 2.45.1
 
