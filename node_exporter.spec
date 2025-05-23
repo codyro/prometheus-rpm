@@ -8,7 +8,7 @@
 Name:          node_exporter
 Summary:       Node exporter for Prometheus
 Version:       1.9.1
-Release:       3%{?dist}
+Release:       4%{?dist}
 License:       ASL 2.0
 
 Source0:       https://github.com/prometheus/node_exporter/releases/download/v%{version}/node_exporter-%{version}.linux-amd64.tar.gz
@@ -90,7 +90,9 @@ fi
 
 %postun
 %systemd_postun_with_restart %{name}.service
-%systemd_postun_with_restart %{name}.socket
+%systemd_postun %{name}.socket
+%{?systemd_reload}
+systemctl try-restart %{name}.socket >/dev/null 2>&1 || :
 
 
 %files
