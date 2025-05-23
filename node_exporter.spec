@@ -8,7 +8,7 @@
 Name:          node_exporter
 Summary:       Node exporter for Prometheus
 Version:       1.9.1
-Release:       2%{?dist}
+Release:       3%{?dist}
 License:       ASL 2.0
 
 Source0:       https://github.com/prometheus/node_exporter/releases/download/v%{version}/node_exporter-%{version}.linux-amd64.tar.gz
@@ -80,14 +80,17 @@ fi
 
 %post
 %systemd_post %{name}.service
+%systemd_post %{name}.socket
 
 
 %preun
 %systemd_preun %{name}.service
+%systemd_preun %{name}.socket
 
 
 %postun
 %systemd_postun_with_restart %{name}.service
+%systemd_postun_with_restart %{name}.socket
 
 
 %files
@@ -101,6 +104,9 @@ fi
 
 
 %changelog
+* Fri May 23 2025 Cody Robertson <cody@hawkhost.com> - 1.9.1-3
+- Add systemd socket unit file macros
+
 * Wed Apr 02 2025 Lars Kiesow <lkiesow@uos.de> - 1.9.1-2
 - Update to 1.9.1
 
