@@ -12,8 +12,9 @@ Release:       2%{?dist}
 License:       ASL 2.0
 
 Source0:       https://github.com/prometheus/node_exporter/releases/download/v%{version}/node_exporter-%{version}.linux-amd64.tar.gz
-Source1:       https://raw.githubusercontent.com/lkiesow/prometheus-rpm/master/node_exporter.service
-Source2:       https://raw.githubusercontent.com/lkiesow/prometheus-rpm/master/node_exporter.env
+Source1:       https://raw.githubusercontent.com/codyro/prometheus-rpm/master/node_exporter.service
+Source2:       https://raw.githubusercontent.com/codyro/prometheus-rpm/master/node_exporter.env
+Source3:       https://raw.githubusercontent.com/codyro/prometheus-rpm/master/node_exporter.socket
 URL:           https://prometheus.io/
 BuildRoot:     %{_tmppath}/%{name}-root
 
@@ -43,6 +44,11 @@ install -p -D -m 0755 %{name} %{buildroot}%{_bindir}/%{name}
 install -p -D -m 0644 \
    %{SOURCE1} \
    %{buildroot}%{_unitdir}/%{name}.service
+
+# install socket file
+install -p -D -m 0644 \
+   %{SOURCE3} \
+   %{buildroot}%{_unitdir}/%{name}.socket
 
 # install systemd environment file
 install -p -D -m 0644 \
@@ -89,6 +95,7 @@ fi
 %{_bindir}/%{name}
 %config(noreplace) %{_sysconfdir}/default/%{name}
 %{_unitdir}/%{name}.service
+%{_unitdir}/%{name}.socket
 %license LICENSE
 %doc NOTICE
 
@@ -111,6 +118,10 @@ fi
 
 * Tue Nov 14 2023 Lars Kiesow <lkiesow@uos.de> - 1.7.0-2
 - Update to 1.7.0
+
+* Tue Oct 03 2023 Cody Robertson <cody@hawkhost.com> - 1.6.1-3
+- Add systemd socket unit file
+- Use socket file
 
 * Tue Jul 18 2023 Lars Kiesow <lkiesow@uos.de> - 1.6.1-2
 - Update to 1.6.1
