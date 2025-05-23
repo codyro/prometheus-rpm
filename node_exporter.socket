@@ -2,7 +2,7 @@
 Description=Node Exporter
 
 [Socket]
-ListenStream=9100
+ListenStream=127.0.0.1:9100
 
 [Install]
 WantedBy=sockets.target
